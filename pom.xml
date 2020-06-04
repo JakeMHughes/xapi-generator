@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.hughesportal</groupId>
+    <artifactId>xapi-generator</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+
+    <properties>
+        <jackson.core.databind.version>2.11.0</jackson.core.databind.version>
+        <main.class>com.hughesportal.xapigenerator.Main</main.class>
+        <exec.maven.plugin.version>1.6.0</exec.maven.plugin.version>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.core.databind.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec.maven.plugin.version}</version>
+                <configuration>
+                    <mainClass>${main.class}</mainClass>
+                    <arguments>
+                        <argument>-p</argument>
+                        <argument>{"name":"raml-api-exp","basePath":"/api/raml-api-exp/v1","port":"8080","endpoints":[{"path":"/post","method":"POST","incomingTransform":"payload","outgoingTransform":"payload.headers","url":"http://httpbin.org/post"},{"path":"/test","method":"GET","incomingTransform":"payload","outgoingTransform":"payload","url":"http://httpbin.org/get"}],"additionalProperties":["property1=test"]}</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
