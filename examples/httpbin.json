@@ -1,0 +1,22 @@
+{
+  "name":"experience-api",
+  "basePath":"/api/exp/v1",
+  "port":"8080",
+  "endpoints":[
+    {
+      "path":"/exp-post",
+      "method":"POST",
+      "incomingTransform":"payload",
+      "outgoingTransform":"payload.headers",
+      "url":"http://httpbin.org/post"
+    },
+    {
+      "path":"/exp-get",
+      "method":"GET",
+      "url":"http://httpbin.org/get"
+    }
+  ],
+  "additionalProperties":[
+    "property1=test"
+  ]
+}

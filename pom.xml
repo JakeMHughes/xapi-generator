@@ -32,10 +32,6 @@
                 <version>${exec.maven.plugin.version}</version>
                 <configuration>
                     <mainClass>${main.class}</mainClass>
-                    <arguments>
-                        <argument>-p</argument>
-                        <argument>{"name":"raml-api-exp","basePath":"/api/raml-api-exp/v1","port":"8080","endpoints":[{"path":"/post","method":"POST","incomingTransform":"payload","outgoingTransform":"payload.headers","url":"http://httpbin.org/post"},{"path":"/test","method":"GET","incomingTransform":"payload","outgoingTransform":"payload","url":"http://httpbin.org/get"}],"additionalProperties":["property1=test"]}</argument>
-                    </arguments>
                 </configuration>
             </plugin>
             <plugin>
