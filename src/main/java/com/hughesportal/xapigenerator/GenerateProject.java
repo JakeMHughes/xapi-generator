@@ -112,7 +112,7 @@ public class GenerateProject {
             for(Route endpoint : xapi.getEndpoints()){
                 String name = (
                         endpoint.getMethod() +
-                                endpoint.getPath().replace("/","_")
+                                endpoint.getPath().replace("/","_").replace("-","_")
                 ).toLowerCase();
 
                 File incomingScript = new File(file.getPath() + "/" + name + "_incoming.ds");

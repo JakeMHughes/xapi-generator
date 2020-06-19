@@ -32,6 +32,10 @@
                 <version>${exec.maven.plugin.version}</version>
                 <configuration>
                     <mainClass>${main.class}</mainClass>
+                    <arguments>
+                        <argument>-f</argument>
+                        <argument>examples/httpbin.json</argument>
+                    </arguments>
                 </configuration>
             </plugin>
             <plugin>

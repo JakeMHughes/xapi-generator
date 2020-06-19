@@ -3,12 +3,15 @@ package com.hughesportal.xapigenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     private static Xapi xapi = null;
 
     public static void main(String[] args) throws JsonProcessingException {
+
 
         //initial args read
         argsHandler(args);

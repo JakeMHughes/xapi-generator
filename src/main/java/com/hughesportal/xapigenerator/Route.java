@@ -68,7 +68,7 @@ public class Route {
 
 
     public String getName(){
-        return (method + path.replace("/", "_")).toLowerCase();
+        return (method + path.replace("/", "_").replace("-", "_")).toLowerCase();
     }
 
     public String getDsIncoming(){
