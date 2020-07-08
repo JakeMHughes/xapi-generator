@@ -3,8 +3,8 @@ package com.hughesportal.xapigenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 public class Main {
 
@@ -26,7 +26,15 @@ public class Main {
         GenerateProject gp = new GenerateProject(xapi);
         gp.generateProject();
 
-        //zip the project files TODO
+        //zip the project files
+        Zip zipper = new Zip();
+        List<File> main_files = new ArrayList<File>(Arrays.asList(gp.mainFolder));
+        try {
+            zipper.zip(main_files, System.getProperty("user.dir")  + "/" + xapi.getApiNameCompressed() +".zip");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
 
         //delete local files
 
