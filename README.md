@@ -35,7 +35,7 @@ mvn clean package
 # -f <file path to payload>
 # -p <String payload>
 # Example: 
-java -jar target/xapi-generator-1.0-SNAPSHOT.jar -f examples/httpbin.json
+java -jar target/xapi-generator-1.0-SNAPSHOT-jar-with-dependencies.jar -f examples/httpbin.json
 ```
 
 ## Built With
