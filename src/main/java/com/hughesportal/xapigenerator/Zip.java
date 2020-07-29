@@ -68,6 +68,7 @@ public class Zip {
      */
     private void zipDirectory(File folder, String parentFolder,
                               ZipOutputStream zos) throws FileNotFoundException, IOException {
+        System.out.println("Zipping to: " + parentFolder);
         for (File file : folder.listFiles()) {
             if (file.isDirectory()) {
                 zipDirectory(file, parentFolder + "/" + file.getName(), zos);

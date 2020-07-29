@@ -56,6 +56,7 @@ public class GenerateProject {
 
     private boolean generateRootFiles(File file){
 
+        System.out.println("Creating file: " + file.getPath() + "/static/pom.xml");
         File pom = new File(file.getPath() +"/pom.xml");
 
         try{
@@ -156,6 +157,7 @@ public class GenerateProject {
  */
 
     private void writeFile(File file, String value) throws IOException {
+        System.out.println("Writing file: " + file.getPath());
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
         writer.write(value);
 

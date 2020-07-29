@@ -42,9 +42,9 @@ public class Tools {
 
     public static String readResourceFile(String fileName) throws IOException {
         StringBuilder content = new StringBuilder();
-        File file = new File(Tools.class.getClassLoader().getResource(fileName).getFile());
+        InputStream is = Tools.class.getClassLoader().getResourceAsStream(fileName); //.getResource(fileName).getFile());
 
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         String line;
         while ((line = br.readLine()) != null){

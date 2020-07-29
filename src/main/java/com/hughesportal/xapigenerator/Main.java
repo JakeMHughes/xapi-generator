@@ -1,7 +1,5 @@
 package com.hughesportal.xapigenerator;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -10,7 +8,7 @@ public class Main {
 
     private static Xapi xapi = null;
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) {
 
 
         //initial args read
