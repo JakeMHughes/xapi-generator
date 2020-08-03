@@ -15,11 +15,12 @@
             outHeaders.add(key, headers.get(key));
         }
 
+        String queryString = mapHeaders(allParams);
         String headersString = mapHeaders(headers);
 
         String transfomredJson;
         try{
-            transfomredJson = executeScript("${dsIncoming}", requestBody, headersString);
+            transfomredJson = executeScript("${dsIncoming}", requestBody, headersString,queryString);
         } catch (IOException ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.toString());
         }
@@ -40,7 +41,7 @@
         headersString = mapHeaders(outHeaders.toSingleValueMap());
 
         try{
-            transfomredJson = executeScript("${dsOutgoing}", result.getBody().toString(), headersString);
+            transfomredJson = executeScript("${dsOutgoing}", result.getBody().toString(), headersString, "{}");
         } catch (IOException ex){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.toString());
         }

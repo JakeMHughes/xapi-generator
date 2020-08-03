@@ -33,13 +33,14 @@ ${endpointsMapping}
 
 
 
-    private String executeScript(String scriptFile, String requestBody, String headers) throws IOException {
+    private String executeScript(String scriptFile, String requestBody, String headers, String queryParameters) throws IOException {
 
         String script = getResourceValue(resourceLoader.getResource("classpath:" + scriptFile));
 
         if(headers != null){
             Map<String, Document> headerKey = new HashMap<>();
             headerKey.put("headers", new StringDocument(headers, "application/json"));
+            headerKey.put("queryParams", new StringDocument(queryParameters, "application/json"));
             Mapper mapper = new Mapper(script, headerKey.keySet(), true);
             return mapper.transform(new StringDocument(requestBody, "application/json"), headerKey, "application/json").getContentsAsString();
         }else{
@@ -66,4 +67,5 @@ ${endpointsMapping}
 
         return headerJson.toString();
     }
+
 }
