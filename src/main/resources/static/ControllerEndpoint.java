@@ -1,5 +1,10 @@
     @${methodCap}Mapping("${path}")
-    public ResponseEntity<?> ${name}(@RequestBody(required=false) String requestBody, @RequestHeader Map<String, String> headers){
+    public ResponseEntity<?> ${name}(@RequestBody(required=false) String requestBody, @RequestHeader Map<String, String> headers, @RequestParam Map<String,String> allParams){
+
+        String linkedParams = "?" + allParams.entrySet()
+                            .stream()
+                            .map( item -> item.getKey()+"="+item.getValue())
+                            .collect(Collectors.joining("&"));
 
         if(requestBody == null){
             requestBody = "{}";
@@ -19,7 +24,7 @@
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.toString());
         }
 
-        final String uri = "${url}";
+        final String uri = "${url}" + linkedParams;
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity result = restTemplate.exchange(uri, HttpMethod.${methodUpper}, new HttpEntity<>(transfomredJson, outHeaders), String.class);
