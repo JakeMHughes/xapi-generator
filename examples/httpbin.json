@@ -11,7 +11,7 @@
       "url":"http://httpbin.org/post"
     },
     {
-      "path":"/exp-get",
+      "path":"/exp-get/{id}",
       "method":"GET",
       "url":"http://httpbin.org/get"
     }
