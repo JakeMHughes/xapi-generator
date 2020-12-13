@@ -5,6 +5,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Spring boot Configuration that configures the HttpRequest classes for autowiring
+ *
+ * @author xapi-generator-archetype
+ */
 @Configuration
 public class Configurer {
 

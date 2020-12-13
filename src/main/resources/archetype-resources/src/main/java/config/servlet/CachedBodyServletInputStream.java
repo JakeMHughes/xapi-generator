@@ -6,6 +6,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Class used for cached input stream
+ *
+ * @author xapi-generator-archetype
+ */
 public class CachedBodyServletInputStream extends ServletInputStream {
 
     private InputStream cachedBodyInputStream;

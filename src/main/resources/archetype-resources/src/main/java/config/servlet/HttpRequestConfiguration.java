@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * HttpRequestConfiguration makes it easy to generate HTTP request
+ *
+ * @author xapi-generator-archetype
+ */
 @Configuration
 @ConfigurationProperties("downstream.properties") //default properties variable
 public class HttpRequestConfiguration {

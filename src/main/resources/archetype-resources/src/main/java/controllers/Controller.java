@@ -19,6 +19,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Spring boot controller class
+ *
+ * The autowired RequestConfiguration is pulled from the {@link ${groupId}.config.Configurer}
+ *
+ * @author xapi-generator-archetype
+ */
 @org.springframework.stereotype.Controller
 public class Controller {
 

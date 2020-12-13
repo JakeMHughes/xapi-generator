@@ -15,6 +15,11 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Spring boot controller class for swagger console endpoint
+ *
+ * @author xapi-generator-archetype
+ */
 @RestController
 public class Console {
 

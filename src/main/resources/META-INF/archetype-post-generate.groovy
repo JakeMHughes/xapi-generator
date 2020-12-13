@@ -115,6 +115,7 @@ static def generateEndpoint(String template, String path, Operation op, String m
     }
 
 
+    //fill in the template file
     return template
             .replace("\${summary}", summary)
             .replace("\${deprecated}", deprecated)
@@ -132,6 +133,8 @@ static def generateMapper(String path, Operation op, String method, Path resourc
     ArrayList<String> names = new ArrayList<>()
     String name = nameGeneration(path, method)
 
+    //Input section, since currently every method gets an input map,
+    //had to create a default mapping file
     if(op.getRequestBody() != null){
         op.getRequestBody().getContent().forEach{ str, mediaType ->
             String fileName = writeScript(str,name, "IN", resources)
@@ -142,6 +145,8 @@ static def generateMapper(String path, Operation op, String method, Path resourc
         names.add(fileName)
     }
 
+    //output section, first needs to get the valid response
+    // then gets the content of the valid response
     if(op.getResponses() != null){
         String responseCode =
                 op.getResponses().keySet().stream()
@@ -174,16 +179,11 @@ static def writeScript(String str, String name, String type, Path resources){
     String body = "payload"
     //TODO set body using example
 
-    Path dsFile = Paths.get(dir.toString(), fileName);
-    try {
-        if(!Files.exists(dir)){
-            Files.createDirectories(dir)
-        }
-        Files.write(dsFile, (header+body).getBytes())
-    } catch (IOException e) {
-        e.printStackTrace()
-        System.exit(500)
-    }
+
+    // create ds directory
+    Files.createDirectories(dir)
+    //write the DS script file
+    Files.write(Paths.get(dir.toString(), fileName), (header+body).getBytes())
     return fileName
 }
 

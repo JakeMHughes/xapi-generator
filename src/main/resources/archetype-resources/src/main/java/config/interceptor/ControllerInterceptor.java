@@ -18,6 +18,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Interceptor class to validate incoming requests match the OAS
+ *
+ * @author xapi-generator-archetype
+ */
 @Component
 public class ControllerInterceptor implements HandlerInterceptor {
 

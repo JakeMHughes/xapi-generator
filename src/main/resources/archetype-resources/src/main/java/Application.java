@@ -13,6 +13,12 @@ import org.springframework.context.annotation.Bean;
 
 import java.net.URL;
 
+/**
+ * Default Spring boot application class
+ * Sets the initialization for the OAS validator, and the swagger console
+ *
+ * @author xapi-generator-archetype
+ */
 @SpringBootApplication
 public class Application {
 

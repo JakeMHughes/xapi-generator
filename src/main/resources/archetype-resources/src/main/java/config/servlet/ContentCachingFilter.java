@@ -14,6 +14,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * Class used for cached input stream
+ *
+ * @author xapi-generator-archetype
+ */
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
 @WebFilter(filterName = "ContentCachingFilter", urlPatterns = "/*")
