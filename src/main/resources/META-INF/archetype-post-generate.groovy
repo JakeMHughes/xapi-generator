@@ -48,7 +48,6 @@ api.getPaths().forEach{pathName, pathItem ->
         else if(currentMethod.equals("Put")){ op = pathItem.getPut() }
         else if(currentMethod.equals("Delete")){ op = pathItem.getDelete() }
 
-
         if(op != null) {
             log.info("Running op: " + currentMethod)
             ArrayList<String> currentMapperNames = generateMapper(pathName, op, currentMethod, resources)
@@ -101,19 +100,21 @@ static def generateMappersInit(ArrayList<String> mappers){
 }
 
 static def generateEndpoint(String template, String path, Operation op, String method, ArrayList<String> mapperNames){
-    if(op == null){
-        return null
-    }
-    String  summary=op.getSummary(),
+    if(op == null){return null}
+    def log = LoggerFactory.getLogger("generator.generateEndpoint")
+
+    String  summary="",
             deprecated="",
             name=nameGeneration(path,method)
     if(op.getDeprecated() != null ){
         deprecated = "\n\t@Deprecated"
     }
-    if(summary == null){
-        summary=op.getDescription()
-    }
+    if(op.getSummary() == null){
+        if(op.getDescription() != null){ summary=op.getDescription()}
+        else{ summary ="" }
+    }else{summary=op.getSummary()}
 
+    log.info("Generating endpoint data")
 
     //fill in the template file
     return template
@@ -136,9 +137,12 @@ static def generateMapper(String path, Operation op, String method, Path resourc
     //Input section, since currently every method gets an input map,
     //had to create a default mapping file
     if(op.getRequestBody() != null){
-        op.getRequestBody().getContent().forEach{ str, mediaType ->
-            String fileName = writeScript(str,name, "IN", resources)
-            names.add(fileName)
+        Content content = op.getRequestBody().getContent()
+        if(content != null) {
+            content.forEach { str, mediaType ->
+                String fileName = writeScript(str, name, "IN", resources)
+                names.add(fileName)
+            }
         }
     }else{ //create default file
         String fileName = writeScript("application/json",name, "IN", resources)
@@ -147,18 +151,26 @@ static def generateMapper(String path, Operation op, String method, Path resourc
 
     //output section, first needs to get the valid response
     // then gets the content of the valid response
+    boolean set = false;
     if(op.getResponses() != null){
-        String responseCode =
+        Optional<String> responseCode =
                 op.getResponses().keySet().stream()
                     .filter{it.startsWith("2")}
-                    .findFirst().get()
-        Content content = op.getResponses().get(responseCode).getContent()
-        if(content != null) {
-            content.forEach { str, mediaType ->
+                    .findFirst()
+        if(responseCode.isPresent()) {
+            Content content = op.getResponses().get(responseCode.get()).getContent()
+            if (content != null) {
+                content.forEach { str, mediaType ->
                     String fileName = writeScript(str, name, "OUT", resources)
                     names.add(fileName)
+                    set = true;
                 }
+            }
         }
+    }
+    if (set) { //create default file
+        String fileName = writeScript("application/json",name, "OUT", resources)
+        names.add(fileName)
     }
 
     log.info("Generated I/O datasonnet scripts")
