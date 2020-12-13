@@ -1,42 +1,62 @@
 # xapi-generator
 
-Xapi-Generator is a Java application that generates an experience
-rest API using Spring Boot. The headers are pass though meaning the 
+Xapi-Generator is an maven archetype that generates an experience
+rest API using Spring Boot and Datasonnet. The headers are pass though meaning the 
 exact headers sent in get passed to the downstream API and the headers
 that the downstream api responds with also get passed through the response.
 
-The main use cause of an experience layer API is the ability to take in 
+The main use case of an experience layer API is the ability to take in 
 multiple different payload structures and convert them into a single unified 
 structure for the process API. Here, this is accomplished by using datasonnet-mapper.
-
-## Getting Started
-
-When getting started with xapi-generator you need to have datasonnet-mapper v1.0.5
-installed (this currently does not exist in a maven repository).
 
 ### Prerequisites
 
 * [Maven](https://maven.apache.org/install.html)  
-* [Datasonnet](https://github.com/modusbox/datasonnet-mapper)   
 
 ### Installing
 
 ```bash
-git clone https://github.com/MS3Inc/datasonnet-mapper
-mvn clean -Ddockerfile.skip install
 git clone https://github.com/JakeMHughes/xapi-generator
-mvn clean package
+mvn clean install
 ```
 
 ## Using
 
+To use the archetype, 
 ```bash
-# Options
-# -f <file path to payload>
-# -p <String payload>
-# Example: 
-java -jar target/xapi-generator-1.0-SNAPSHOT-jar-with-dependencies.jar -f examples/httpbin.json
+mvn  archetype:generate \
+  -DarchetypeGroupId=com.hughesportal \
+  -DarchetypeArtifactId=xapi-generator-archetype \
+  -DarchetypeVersion=1.0.0-SNAPSHOT \
+  -DgroupId=<YOUR_GROUPID> \
+  -DartifactId=<YOUR_ARTIFACTID> \
+  -Dversion=<YOUR_VERSION> \
+  -DOAS=<YOUR_OAS_LOCATION>
 ```
+
+Additional options:
+```bash
+  -DdownstreamHost=http://httpbin.org
+  -DdownstreamPort=80
+  -DdownstreamUrl=/get #This is the base url
+```
+
+Example:
+```bash
+mvn  archetype:generate \
+  -DarchetypeGroupId=com.hughesportal \
+  -DarchetypeArtifactId=xapi-generator-archetype \
+  -DarchetypeVersion=1.0.0-SNAPSHOT \
+  -DgroupId=com.test \
+  -DartifactId=example \
+  -Dversion=1.0.0-SNAPSHOT \
+  -DOAS=/home/OAS/example.yaml
+
+```
+
+## After Generation
+
+Look in the generated readme file for the next steps to do after your generated your application.
 
 ## Built With
 
