@@ -48,7 +48,7 @@
         headersString = mapHeaders(outHeaders.toSingleValueMap());
 
         return ResponseEntity.status(200).headers(outHeaders).body(mappers.get("${fileName}_OUT_" + mapperType + ".ds")
-                            .transform(new DefaultDocument<>(result.getBody().toString(), MediaTypes.UNKNOWN),
+                            .transform(new DefaultDocument<>(result.getBody(), MediaTypes.UNKNOWN),
                                 Map.of("headers", new DefaultDocument<>(headersString, MediaTypes.APPLICATION_JSON),
                                         "params", new DefaultDocument<>(queryString, MediaTypes.APPLICATION_JSON)),
                                  MediaTypes.ANY).getContent());

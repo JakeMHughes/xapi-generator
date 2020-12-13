@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
  *
  * @author xapi-generator-archetype
  */
+@SuppressWarnings("unused")
 @RestController
 public class Console {
 
@@ -28,7 +29,7 @@ public class Console {
     //this endpoint is for springdoc to parse our specification for the console
     @GetMapping(value = "/api-docs")
     public ResponseEntity<?> getSwaggerDoc() throws IOException {
-        String value = getFileFromResources("specification.yaml");
+        String value = getFileFromResources();
         return ResponseEntity.status(200).body(value);
     }
 
@@ -47,20 +48,21 @@ public class Console {
                     .bodyToMono(String.class)
                     .block();
             //this fixes some location issues in the JavaScript
-            body = body.replaceAll("src=\".", "src=\"./swagger-ui")
+            body = Objects.requireNonNullElse(body,"")
+                    .replaceAll("src=\".", "src=\"./swagger-ui")
                     .replaceAll("href=\".", "href=\"./swagger-ui")
                     .replace("url: \"https://petstore.swagger.io/v2/swagger.json\",", "url: \"/api/api-docs\",");
-            return ResponseEntity.ok(Objects.requireNonNull(body));
+            return ResponseEntity.ok(body);
         } catch (WebClientResponseException ex){
             log.error(ex.getLocalizedMessage());
             throw new Exception();
         }
     }
 
-    private String getFileFromResources(String fileName) throws IOException {
+    private String getFileFromResources() throws IOException {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
-                        new ClassPathResource(fileName).getInputStream()));
+                        new ClassPathResource("specification.yaml").getInputStream()));
         return reader.lines().collect(Collectors.joining("\n"));
     }
 

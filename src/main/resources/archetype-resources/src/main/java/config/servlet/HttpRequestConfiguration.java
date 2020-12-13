@@ -17,6 +17,7 @@ import java.util.Objects;
  *
  * @author xapi-generator-archetype
  */
+@SuppressWarnings("unused")
 @Configuration
 @ConfigurationProperties("downstream.properties") //default properties variable
 public class HttpRequestConfiguration {

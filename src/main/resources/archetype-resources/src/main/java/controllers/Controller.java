@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
  *
  * @author xapi-generator-archetype
  */
+@SuppressWarnings("unused")
 @org.springframework.stereotype.Controller
 public class Controller {
 

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author xapi-generator-archetype
  */
+@SuppressWarnings("unused")
 @Configuration
 public class Configurer {
 
@@ -20,8 +21,8 @@ public class Configurer {
         Copy this snippet for each api you need to connect to.
         When you want to use it, you would do:
 
-        @Autowired
-        HttpRequestConfiguration httpRequestSystem
+        //@Autowired
+        //HttpRequestConfiguration httpRequestSystem
 
         When autowiring, you must use the same name.
 

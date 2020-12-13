@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ${groupId}.config.servlet.CachedBodyHttpServletRequest;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -19,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  *
  * @author xapi-generator-archetype
  */
+@SuppressWarnings("unused")
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 @Component
 @WebFilter(filterName = "ContentCachingFilter", urlPatterns = "/*")
@@ -26,8 +27,8 @@ public class ContentCachingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest httpServletRequest,
-            HttpServletResponse httpServletResponse,
+            @NotNull HttpServletRequest httpServletRequest,
+            @NotNull HttpServletResponse httpServletResponse,
             FilterChain filterChain)
             throws ServletException, IOException {
         CachedBodyHttpServletRequest cachedBodyHttpServletRequest = new CachedBodyHttpServletRequest(httpServletRequest);

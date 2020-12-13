@@ -19,6 +19,7 @@ import java.net.URL;
  *
  * @author xapi-generator-archetype
  */
+@SuppressWarnings("unused")
 @SpringBootApplication
 public class Application {
 

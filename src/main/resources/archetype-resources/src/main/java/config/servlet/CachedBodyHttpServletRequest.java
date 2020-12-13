@@ -14,7 +14,7 @@ import java.io.*;
  */
 public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
-    private byte[] cachedBody;
+    private final byte[] cachedBody;
 
     public CachedBodyHttpServletRequest(HttpServletRequest request) throws IOException {
         super(request);
@@ -23,12 +23,12 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
     }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
+    public ServletInputStream getInputStream() {
         return new CachedBodyServletInputStream(this.cachedBody);
     }
 
     @Override
-    public BufferedReader getReader() throws IOException {
+    public BufferedReader getReader() {
         // Create a reader from cachedContent
         // and return it
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(this.cachedBody);

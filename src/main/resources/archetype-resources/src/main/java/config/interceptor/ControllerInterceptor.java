@@ -1,6 +1,7 @@
 package ${groupId}.config.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 import org.openapi4j.core.validation.ValidationException;
 import org.openapi4j.operation.validator.adapters.server.servlet.ServletRequest;
 import org.openapi4j.operation.validator.model.Request;
@@ -39,7 +40,7 @@ public class ControllerInterceptor implements HandlerInterceptor {
 
     //executes before the controller class, returns false on error
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request,@NotNull HttpServletResponse response,@NotNull Object handler) throws Exception {
         //skip console and Spring related paths
         if(Arrays.stream(skippable).anyMatch(request.getServletPath()::startsWith)) {
             log.info("[Data Validation] Skip");
