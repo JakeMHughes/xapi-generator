@@ -17,6 +17,8 @@ def log = LoggerFactory.getLogger("generator.main")
 String oas = request.properties['OAS']
 String groupIdPath = request.groupId
 
+log.info("")
+log.info("")
 log.info("Setting project paths")
 Path root = Paths.get(request.outputDirectory,request.artifactId)
 Path packaged = Paths.get(root.toString(), "src/main/java", groupIdPath.replace(".", "/"))
@@ -37,6 +39,7 @@ log.info("Starting to process the OAS.")
 api.getPaths().forEach{pathName, pathItem ->
     String[] methodList = ["Get", "Post", "Patch", "Put", "Delete"]
 
+    log.info("Processing path: " + pathName)
     for(String currentMethod : methodList){
         Operation op = null;
         if(currentMethod.equals("Get")){ op = pathItem.getGet() }
@@ -45,8 +48,9 @@ api.getPaths().forEach{pathName, pathItem ->
         else if(currentMethod.equals("Put")){ op = pathItem.getPut() }
         else if(currentMethod.equals("Delete")){ op = pathItem.getDelete() }
 
-        log.info("Running op: " + currentMethod +"\t\tPath: " + pathName)
+
         if(op != null) {
+            log.info("Running op: " + currentMethod)
             ArrayList<String> currentMapperNames = generateMapper(pathName, op, currentMethod, resources)
             if (currentMapperNames != null) {
                 mapperNames.addAll(currentMapperNames)
@@ -57,20 +61,27 @@ api.getPaths().forEach{pathName, pathItem ->
             }
         }
     }
+    log.info("Finished path...")
 }
 
 String controllerTemplate = Files.readString(controller);
 
+log.info("")
+log.info("")
+log.info("Finalizing the data")
 String allEndpoints = endpoints.stream().collect(Collectors.joining("\n"))
 String mappersInit = generateMappersInit(mapperNames)
 
+log.info("Writing the Controllers class")
 Files.write(controller,
             controllerTemplate
                 .replace("\${mappers}", mappersInit)
                 .replace("\${endpointsMapping}", allEndpoints)
                     .getBytes());
 
+log.info("Deleting the endpoint template.")
 Files.delete(controllerEndpoint);
+log.info("Saving the specification to resources")
 Files.copy(Paths.get(oas),Paths.get(resources.toString(), "specification.yaml"));
 
 
@@ -145,7 +156,7 @@ static def generateMapper(String path, Operation op, String method, Path resourc
         }
     }
 
-    log.info("Generated names: " + names)
+    log.info("Generated I/O datasonnet scripts")
 
     return names;
 }
@@ -180,14 +191,6 @@ static def nameGeneration(String path, String method){
     return method.toLowerCase() +
             path.replaceAll("[{}]", "")
                     .replaceAll("[/]", "_")
-}
-
-static def mapToJson(Map<String, String> data){
-    ArrayList<String> content = new ArrayList<>()
-    data.forEach{key,value ->
-        content.add(wrap(key) +": " + wrap(value))
-    }
-    return "{" + content.stream().collect(Collectors.joining(",")) + "}"
 }
 
 static def wrap(String str){
